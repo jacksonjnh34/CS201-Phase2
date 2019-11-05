@@ -69,6 +69,31 @@ private:
 		if(cmp == 0)	n.val = v;
 		else if (cmp < 0)	n.left = _insert(n.left, k, v);
 		else 				n.right = _insert(n.right, k, v);
+
+		if(n.right.color && !n.left.color)	n = rotateLeft(n);
+		if(n.left.color && !n.left.left.color)	n = rotateRight(n);
+
+		return n;
+	}
+
+	Node rotateLeft(Node n)
+	{
+		Node x = n.right;
+		n.right = x.left;
+		x.left = n;
+		x.color = n.color;
+		n.color = RED;
+		return x;
+	}
+
+	Node rotateRight(Node n)
+	{
+		Node x = n.left;
+		n.left = x.right;
+		x.left = n;
+		x.color = n.color;
+		n.color = RED;
+		return x;
 	}
 
 	void colorFlip(Node n)
